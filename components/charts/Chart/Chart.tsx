@@ -11,7 +11,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { format } from "date-fns";
-import React, { ReactNode, SetStateAction, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import {
   AreaChart,
   Area,
@@ -23,6 +23,8 @@ import {
   Brush,
 } from "recharts";
 import { CurveType } from "recharts/types/shape/Curve";
+import { useAppSelector } from "store/hooks";
+import { globalCurrencyCode } from "store/slices/globalCurrencyCodeSlice";
 import { formattedCurrentPrice } from "utils/formattedCurrentPrice";
 
 const Chart = ({ coin }: { coin: string }) => {
@@ -32,6 +34,7 @@ const Chart = ({ coin }: { coin: string }) => {
   const daysArray = ["1", "7", "14", "30", "90", "180", "360", "720", "max"];
   const theme = useTheme();
   let formatter = Intl.NumberFormat("en", { notation: "compact" });
+  const selectedCurrency = useAppSelector(globalCurrencyCode);
 
   const curveTypes: { [key: string]: string } = {
     basis: "Basis",
@@ -69,7 +72,7 @@ const Chart = ({ coin }: { coin: string }) => {
         >
           <Typography>{format(label, "dd.MM.yyyy HH:mm")}</Typography>
           <Typography>
-            {formattedCurrentPrice("USD", payload[0].value)}
+            {formattedCurrentPrice(selectedCurrency, payload[0].value)}
           </Typography>
         </Box>
       );

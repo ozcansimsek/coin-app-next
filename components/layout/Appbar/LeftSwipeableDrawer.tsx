@@ -6,7 +6,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Add, House } from "@mui/icons-material";
+import { CurrencyExchange, House } from "@mui/icons-material";
 import Link from "next/link";
 
 const LeftSwipeableDrawer = ({
@@ -46,9 +46,9 @@ const LeftSwipeableDrawer = ({
               <ListItem disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
-                    <Add />
+                    <CurrencyExchange />
                   </ListItemIcon>
-                  <ListItemText primary={"Submit Cryptocurrency"} />
+                  <ListItemText primary={"Exchanges"} />
                 </ListItemButton>
               </ListItem>
             </Link>

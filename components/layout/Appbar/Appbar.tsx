@@ -7,38 +7,22 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 import LeftSwipeableDrawer from "./LeftSwipeableDrawer";
 import Link from "next/link";
-import { Link as MuiLink } from "@mui/material";
-import { useRouter } from "next/router";
+import { Link as MuiLink, useTheme } from "@mui/material";
+import GlobalCurrencySelect from "./GlobalCurrencySelect";
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
   const [isDrawerOpen, setIsDrawerOpen] = React.useState<boolean>(false);
-
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
-  const router = useRouter();
 
   return (
     <AppBar position="static">
@@ -48,21 +32,28 @@ const ResponsiveAppBar = () => {
           setIsDrawerOpen={setIsDrawerOpen}
         />
         <Toolbar disableGutters>
-          <ShowChartIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Link href="/" passHref>
             <MuiLink
+              underline="none"
               variant="h6"
               noWrap
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
+                alignItems: "center",
                 fontFamily: "monospace",
                 fontWeight: 700,
                 letterSpacing: ".3rem",
                 color: "inherit",
-                textDecoration: "none",
+                "&:hover": {
+                  transform: "scale(1.05)",
+                  transition: "all .2s ease-in-out",
+                },
               }}
             >
+              <ShowChartIcon
+                sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+              />
               COINLER
             </MuiLink>
           </Link>
@@ -140,35 +131,10 @@ const ResponsiveAppBar = () => {
                 <Typography textAlign="center">Exchanges</Typography>
               </MenuItem>
             </Link>
-          </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" />
-              </IconButton>
-            </Tooltip>
-
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              <MenuItem>
-                <Typography textAlign="center">Sign Out</Typography>
-              </MenuItem>
-            </Menu>
+            <Box sx={{ marginLeft: "auto" }}>
+              <GlobalCurrencySelect />
+            </Box>
           </Box>
         </Toolbar>
       </Container>

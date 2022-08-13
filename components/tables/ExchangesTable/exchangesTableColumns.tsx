@@ -1,8 +1,8 @@
 import { Box, LinearProgress, Typography } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
-import { Link as MuiLink } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import AppLink from "components/AppLink";
 
 export const exchangesTableColumns: GridColDef[] = [
   { field: "trust_score_rank", headerName: "#", width: 80 },
@@ -20,16 +20,7 @@ export const exchangesTableColumns: GridColDef[] = [
             height={20}
           />
           <Link href={`/exchange/${cellProps.row.id}`} passHref>
-            <MuiLink
-              variant="body2"
-              marginLeft={1}
-              sx={{
-                fontWeight: "bold",
-                textDecoration: "none",
-              }}
-            >
-              {cellProps.row.name}
-            </MuiLink>
+            <AppLink marginLeft={1}>{cellProps.row.name}</AppLink>
           </Link>
         </Box>
       );

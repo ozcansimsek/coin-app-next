@@ -1,17 +1,22 @@
 import { Box, Chip } from "@mui/material";
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import { Link as MuiLink } from "@mui/material";
 import Image from "next/image";
-import Link from "next/link";
 import SimpleChart from "components/charts/SimpleChart";
 import { formattedMarketCap } from "utils/formattedMarketCap";
 import { formattedCirculatingSupply } from "utils/formattedCirculatingSupply";
 import { formattedCurrentPrice } from "utils/formattedCurrentPrice";
-import Change from "components/shared/Change";
+import Change from "components/Change";
 import { Coin } from "types/coin";
+import AppLink from "components/AppLink";
+import Link from "next/link";
 
-export const coinsTableColumns: GridColDef[] = [
-  { field: "market_cap_rank", headerName: "#", width: 80 },
+export const coinsTableColumns = (globalCurrency: string): GridColDef[] => [
+  {
+    field: "market_cap_rank",
+    headerName: "#",
+    width: 80,
+    disableColumnMenu: true,
+  },
   {
     field: "name",
     headerName: "Name",
@@ -27,19 +32,11 @@ export const coinsTableColumns: GridColDef[] = [
             height={20}
           />
           <Link href={`/coin/${cellProps.row.id}`} passHref>
-            <MuiLink
-              variant="body2"
-              marginLeft={1}
-              sx={{
-                fontWeight: "bold",
-                textDecoration: "none",
-              }}
-            >
-              {cellProps.row.name}
-            </MuiLink>
+            <AppLink marginLeft={1}>{cellProps.row.name}</AppLink>
           </Link>
+
           <Chip
-            sx={{ marginLeft: 1 }}
+            sx={{ marginLeft: 1, borderRadius: 1 }}
             label={cellProps.row.symbol.toUpperCase()}
             size="small"
           />
@@ -51,7 +48,7 @@ export const coinsTableColumns: GridColDef[] = [
     field: "current_price",
     headerName: "Price",
     renderCell: (cellProps) =>
-      formattedCurrentPrice("USD", cellProps.row.current_price),
+      formattedCurrentPrice(globalCurrency, cellProps.row.current_price),
     align: "right",
     headerAlign: "right",
     width: 150,
@@ -64,6 +61,7 @@ export const coinsTableColumns: GridColDef[] = [
     ),
     align: "right",
     headerAlign: "right",
+    disableColumnMenu: true,
   },
   {
     field: "price_change_percentage_24h",
@@ -73,6 +71,7 @@ export const coinsTableColumns: GridColDef[] = [
     ),
     align: "right",
     headerAlign: "right",
+    disableColumnMenu: true,
   },
   {
     field: "price_change_percentage_7d_in_currency",
@@ -82,12 +81,13 @@ export const coinsTableColumns: GridColDef[] = [
     ),
     align: "right",
     headerAlign: "right",
+    disableColumnMenu: true,
   },
   {
     field: "market_cap",
     headerName: "Market Cap",
     renderCell: (cellProps) =>
-      formattedMarketCap("USD", cellProps.row.market_cap),
+      formattedMarketCap(globalCurrency, cellProps.row.market_cap),
     align: "right",
     headerAlign: "right",
     width: 150,
@@ -97,13 +97,14 @@ export const coinsTableColumns: GridColDef[] = [
     headerName: "Circulating Supply",
     renderCell: (cellProps) =>
       formattedCirculatingSupply(
-        "USD",
+        globalCurrency,
         cellProps.row.circulating_supply,
         cellProps.row.symbol
       ),
     align: "right",
     headerAlign: "right",
     width: 200,
+    disableColumnMenu: true,
   },
   {
     field: "sparkline_in_7d",

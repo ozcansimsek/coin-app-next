@@ -15,11 +15,11 @@ const Change = (props: ChangeProps) => {
         display="flex"
         alignItems="center"
         color={
-          change > 0 ? theme.palette.error.main : theme.palette.success.main
+          change < 0 ? theme.palette.error.main : theme.palette.success.main
         }
       >
         <Typography variant="body2" display="flex" alignItems="center">
-          {change > 0 ? <ArrowDropDown /> : <ArrowDropUp />}
+          {change > 0 ? <ArrowDropUp /> : <ArrowDropDown />}
         </Typography>
 
         <Typography variant="body2">
